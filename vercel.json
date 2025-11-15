@@ -2,15 +2,16 @@
   "version": 2,
   "public": true,
   "name": "angular-ssr",
+  "functions": {
+    "api/**/*.js": {
+      "runtime": "nodejs24.4.0",
+      "includeFiles": "dist/angular-ssr/**"
+    }
+  },
   "rewrites": [
     {
       "source": "/(.*)",
       "destination": "/api/index"
     }
-  ],
-  "functions": {
-    "api/index.js": {
-      "includeFiles": "dist/angular-ssr/**"
-    }
-  }
+  ]
 }
