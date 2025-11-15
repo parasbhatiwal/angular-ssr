@@ -5,12 +5,7 @@
   "rewrites": [
     {
       "source": "/(.*)",
-      "destination": "/api"
+      "destination": "/api/index"
     }
-  ],
-  "functions": {
-    "api/server.mjs": {
-      "includeFiles": "dist/angular-ssr/**"
-    }
-  }
+  ]
 }
