@@ -1,21 +1,16 @@
 {
   "version": 2,
-  "buildCommand": "npm run build",
-  "outputDirectory": "dist/angular-ssr/browser",
-  "functions": {
-    "api/server.mjs": {
-      "runtime": "@vercel/node"
-    }
-  },
+  "public": true,
+  "name": "angular-ssr",
   "rewrites": [
     {
-      "source": "/(.*\\.(js|css|ico|png|jpg|jpeg|gif|svg|woff|woff2|ttf|eot))",
-      "destination": "/$1"
-    },
-    {
       "source": "/(.*)",
-      "destination": "/api/server.mjs"
+      "destination": "/api"
     }
-  ]
+  ],
+  "functions": {
+    "api/index.js": {
+      "includeFiles": "dist/angular-ssr/**"
+    }
+  }
 }
-

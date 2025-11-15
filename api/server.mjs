@@ -1,6 +1,10 @@
-// Import the request handler from the built server
-import { reqHandler } from '../dist/angular-ssr/server/server.mjs';
-
-// Export as default handler for Vercel
-export default reqHandler;
-
+import('../dist/angular-ssr/server/server.mjs')
+  .then(module => module.app)
+  .catch(error => {
+    console.error('Failed to load server module:', error);
+    throw error;
+  });
+export default async (req, res) => {
+  const { app } = await import('../dist/angular-ssr/server/server.mjs');
+  return app(req, res);
+};
