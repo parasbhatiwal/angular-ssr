@@ -1,12 +1,19 @@
 export default async function handler(req, res) {
   try {
-    // Dynamically import the Angular server
-    const { default: server } = await import('../dist/angular-ssr/server/server.mjs');
+    const serverModule = await import('../dist/angular-ssr/server/server.mjs');
     
-    // The server export is typically an Express app
-    server.handle(req, res);
+    // Angular's new builder exports the server differently
+    const server = serverModule.default || serverModule.app || serverModule;
+    
+    if (typeof server === 'function') {
+      return server(req, res);
+    } else if (server && typeof server.handle === 'function') {
+      return server.handle(req, res);
+    } else {
+      throw new Error('Server module does not export a valid handler');
+    }
   } catch (error) {
     console.error('Server error:', error);
-    res.status(500).send('Internal Server Error');
+    res.status(500).send('Internal Server Error: ' + error.message);
   }
 }
